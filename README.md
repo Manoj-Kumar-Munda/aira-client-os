@@ -21,7 +21,6 @@ This is a Turborepo monorepo with the following structure:
 
 - **TypeScript** everywhere
 - **Next.js** (web)
-- **React Native** (mobile)
 - **TanStack Query** for data fetching
 - **Zustand** for state management
 - **Zod** for schema validation
@@ -40,21 +39,10 @@ This is a Turborepo monorepo with the following structure:
 # Install dependencies
 pnpm install
 
-# Copy environment files
-cp .env.example .env.local
-cp apps/aira-web/.env.example apps/aira-web/.env.local
-cp apps/aira-app/.env.example apps/aira-app/.env
 
 # Start the web app in development
 pnpm dev --filter=aira-web
 
-# Start the mobile app
-pnpm dev --filter=aira-app
-```
-
-### Environment Variables
-
-See `.env.example` files in the root and each app directory for required variables.
 
 ## The Assignment
 
@@ -86,14 +74,6 @@ Reply to the assignment email with your code and a short note explaining what yo
 │   │   │   ├── app/       # Next.js app router pages
 │   │   │   ├── components/
 │   │   │   └── lib/       # API client, utilities
-│   │   └── ...
-│   └── aira-app/          # React Native mobile app
-│       ├── src/
-│       │   ├── screens/   # App screens (auth, main, settings)
-│       │   ├── components/
-│       │   ├── hooks/
-│       │   └── constants.ts
-│       └── ...
 ├── packages/
 │   ├── core/              # Shared business logic
 │   │   └── src/
