@@ -45,6 +45,8 @@ export function ConnectorListItem({
 }: ConnectorListItemProps) {
   const Icon = connectorIcons[type];
 
+  isConnected = true;
+
   return (
     <motion.button
       initial={{ opacity: 0, y: 20 }}
@@ -54,7 +56,7 @@ export function ConnectorListItem({
       onClick={onClick}
       disabled={isLoading}
       className={cn(
-        'w-full rounded-2xl border border-border bg-card p-4 text-left transition-colors hover:bg-accent/50',
+        'w-full rounded-2xl border border-border bg-card p-4 text-left transition-colors hover:bg-accent/50 group',
         isLoading && 'opacity-50',
       )}
     >
@@ -84,7 +86,7 @@ export function ConnectorListItem({
           </div>
 
           {/* Subtitle */}
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm text-muted-foreground group-hover:text-primary">
             {subtitle || (isConnected ? 'Tap to manage' : 'Tap to connect')}
           </p>
 
