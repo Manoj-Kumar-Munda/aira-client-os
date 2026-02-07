@@ -13,28 +13,27 @@ import { ROUTES } from '@/lib/constants';
 
 export default function PhonePage() {
   const router = useRouter();
-  const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+  const [subscriberNumber, setSubscriberNumber] = useState('');
   const { mutate: updateUser, isPending: isUpdating } = useUpdateUser();
   const { logout } = useAuthActions();
 
-  const cleanedPhone = phone.replace(/\D/g, '');
-  const isValidPhone = cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
+  // Total digits = country code + subscriber number
+  const totalDigits = countryCode.length + subscriberNumber.length;
+  // total digits (country code + subscriber) must be 8-15
+  const isValidPhone = totalDigits >= 8 && totalDigits <= 15;
 
-  const formatPhoneNumber = (input: string): string => {
-    const cleaned = input.replace(/\D/g, '');
-    if (!cleaned) return '';
-    if (cleaned.length <= 3) return `${cleaned}`;
-    const formatted = cleaned.replace(/(\d{3})(?=\d)/g, '$1 ');
-    return `${formatted}`;
+  const getFormattedPhone = (): string => {
+    return countryCode + subscriberNumber;
   };
 
   const handleContinue = async () => {
     if (!isValidPhone || isUpdating) return;
 
-    const formattedPhone = formatPhoneNumber(phone);
+    const formattedPhone = getFormattedPhone();
 
     updateUser(
-      { p_n: formattedPhone.replace(/\s+/g, '') },
+      { p_n: formattedPhone },
       {
         onSuccess: () => {
           // User is now active, redirect to hub
@@ -80,7 +79,7 @@ export default function PhonePage() {
                 AiRA needs your phone number to get started
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Start with your country code (e.g., +1, +91)
+                Enter your country code and phone number
               </p>
             </div>
 
@@ -91,7 +90,12 @@ export default function PhonePage() {
           </div>
 
           {/* Phone Input */}
-          <PhoneInput value={phone} onChange={setPhone} />
+          <PhoneInput
+            countryCode={countryCode}
+            subscriberNumber={subscriberNumber}
+            onCountryCodeChange={setCountryCode}
+            onSubscriberNumberChange={setSubscriberNumber}
+          />
 
           {/* Mobile Avatar */}
           <div className="flex justify-center md:hidden">
